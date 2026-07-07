@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Lost in the Desert</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #a8561f;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .sky {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 52%;
+    background: linear-gradient(180deg, #c04a1a 0%, #e0722e 40%, #f0a055 100%);
+  }
+
+  .sun {
+    position: absolute;
+    top: 10%; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 80px;
+    background: #ffe566;
+    border-radius: 50%;
+    box-shadow: 0 0 50px 25px rgba(255,220,80,0.45), 0 0 100px 50px rgba(255,180,40,0.18);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 50px 25px rgba(255,220,80,0.45), 0 0 100px 50px rgba(255,180,40,0.18); }
+    50%      { box-shadow: 0 0 70px 35px rgba(255,220,80,0.55), 0 0 140px 70px rgba(255,180,40,0.25); }
+  }
+
+  .heat-shimmer {
+    position: absolute; top: 47%; left: 0; right: 0; height: 70px;
+    background: linear-gradient(180deg, transparent, rgba(255,200,100,0.2), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%,100% { opacity: 0.35; transform: scaleY(1); }
+    50%     { opacity: 1;    transform: scaleY(1.5); }
+  }
+
+  .dune-back  { position:absolute; bottom:32%; left:-8%;  right:-8%;  height:200px; background:#c8783a; border-radius:50% 50% 0 0/60% 60% 0 0; }
+  .dune-mid   { position:absolute; bottom:20%; left:-12%; right:-12%; height:220px; background:#b8652e; border-radius:60% 40% 0 0/55% 45% 0 0; }
+  .dune-front { position:absolute; bottom:0;   left:-6%;  right:-6%;  height:170px; background:#a8561f; border-radius:40% 60% 0 0/50% 50% 0 0; }
+  .dune-fr    { position:absolute; bottom:0;   right:-22%; width:72%; height:150px; background:#9e4e18; border-radius:60% 0 0 0/60% 0 0 0; }
+
+  .sand-ripples { position:absolute; bottom:7%; left:50%; transform:translateX(-50%); width:340px; opacity:0.2; }
+  .ripple { height:2px; background:rgba(255,220,180,0.65); border-radius:50%; margin:6px 0; animation:rw 3s ease-in-out infinite; }
+  .ripple:nth-child(1){ width:100%; }
+  .ripple:nth-child(2){ width:78%; margin-left:11%; animation-delay:.3s; }
+  .ripple:nth-child(3){ width:56%; margin-left:22%; animation-delay:.6s; }
+  @keyframes rw { 0%,100%{opacity:.4} 50%{opacity:.85} }
+
+  .footprints { position:absolute; bottom:15%; left:50%; transform:translateX(-50%); display:flex; gap:16px; opacity:0.18; }
+  .fp { width:8px; height:14px; background:rgba(60,20,0,0.8); border-radius:50%; transform:rotate(8deg); }
+  .fp:nth-child(even){ margin-top:11px; transform:rotate(-8deg); }
+
+  .skull { position:absolute; bottom:22%; left:10%; font-size:32px; opacity:0.55; transform:rotate(-15deg); animation:sway 5s ease-in-out infinite; }
+  @keyframes sway { 0%,100%{transform:rotate(-15deg)} 50%{transform:rotate(-7deg)} }
+
+  .cactus-a { position:absolute; bottom:27%; right:12%; }
+  .cactus-b { position:absolute; bottom:24%; left:6%; }
+  .cactus-c { position:absolute; bottom:23%; right:3%; }
+  .cactus-d { position:absolute; bottom:22%; left:28%; }
+  .cactus-a svg { filter:drop-shadow(3px 6px 10px rgba(40,10,0,0.4)); }
+  .cactus-b svg { filter:drop-shadow(2px 5px 8px rgba(40,10,0,0.35)); }
+  .cactus-c svg { filter:drop-shadow(2px 4px 6px rgba(40,10,0,0.3)); }
+  .cactus-d svg { filter:drop-shadow(1px 3px 5px rgba(40,10,0,0.25)); }
+
+  /* ── CONTENT ── */
+  .content {
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center; padding:2rem;
+    z-index:20;
+  }
+
+  .error-code {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(100px, 20vw, 160px);
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: 6px;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,0.35),
+      0 0 60px rgba(255,255,255,0.15);
+    animation: flicker 7s ease-in-out infinite;
+  }
+  @keyframes flicker {
+    0%,88%,100%{opacity:1}
+    90%{opacity:.82} 93%{opacity:1} 95%{opacity:.88}
+  }
+
+  .tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 5vw, 36px);
+    color: #ffffff;
+    letter-spacing: 8px;
+    margin-top: -0.2rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    opacity: 0.9;
+  }
+
+  .divider {
+    width: 48px; height: 3px;
+    background: #ffffff;
+    border-radius: 2px;
+    margin: 1.6rem auto;
+    opacity: 0.5;
+  }
+
+  .msg-box {
+    max-width: 440px;
+  }
+
+  .msg-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(17px, 3vw, 21px);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    margin-bottom: 0.6rem;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  .msg-body {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 2.2vw, 15px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2.2rem;
+    padding: 0.75rem 2rem;
+    background: #ffffff;
+    color: #7a3210;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .btn:hover {
+    background: #f0e8d8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  }
+  .btn:active { transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="sun"></div>
+<div class="heat-shimmer"></div>
+
+<div class="dune-back"></div>
+<div class="dune-mid"></div>
+<div class="dune-front"></div>
+<div class="dune-fr"></div>
+
+<div class="sand-ripples">
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+  <div class="ripple"></div>
+</div>
+
+<div class="footprints">
+  <div class="fp"></div><div class="fp"></div>
+  <div class="fp"></div><div class="fp"></div>
+  <div class="fp"></div><div class="fp"></div>
+  <div class="fp"></div><div class="fp"></div>
+</div>
+
+<div class="skull">💀</div>
+
+<!-- CACTUS A — tall, right -->
+<div class="cactus-a">
+  <svg width="68" height="140" viewBox="0 0 68 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="27" y="8"  width="14" height="122" rx="7" fill="#4e7d3a"/>
+    <rect x="6"  y="52" width="35" height="12"  rx="6" fill="#4e7d3a"/>
+    <rect x="6"  y="30" width="14" height="34"  rx="7" fill="#4e7d3a"/>
+    <rect x="40" y="44" width="22" height="12"  rx="6" fill="#4e7d3a"/>
+    <rect x="50" y="22" width="12" height="34"  rx="6" fill="#4e7d3a"/>
+    <line x1="10" y1="36" x2="4"  y2="32" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="44" x2="4"  y2="40" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="52" x2="4"  y2="48" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="58" y1="28" x2="64" y2="24" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="58" y1="36" x2="64" y2="32" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="58" y1="44" x2="64" y2="40" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="27" y1="70"  x2="21" y2="66"  stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="41" y1="80"  x2="47" y2="76"  stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="27" y1="95"  x2="21" y2="91"  stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="41" y1="108" x2="47" y2="104" stroke="#6aad52" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="34" cy="8" r="5" fill="#e85d7a"/>
+    <circle cx="28" cy="6" r="3" fill="#e85d7a"/>
+    <circle cx="40" cy="6" r="3" fill="#e85d7a"/>
+  </svg>
+</div>
+
+<!-- CACTUS B — medium, left -->
+<div class="cactus-b">
+  <svg width="52" height="108" viewBox="0 0 52 108" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="10" width="12" height="88" rx="6" fill="#567a3e"/>
+    <rect x="4"  y="42" width="28" height="10" rx="5" fill="#567a3e"/>
+    <rect x="4"  y="26" width="12" height="26" rx="6" fill="#567a3e"/>
+    <rect x="32" y="50" width="16" height="10" rx="5" fill="#567a3e"/>
+    <rect x="38" y="36" width="10" height="24" rx="5" fill="#567a3e"/>
+    <line x1="8"  y1="30" x2="3"  y2="27" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="8"  y1="40" x2="3"  y2="37" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="44" y1="40" x2="49" y2="37" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="44" y1="50" x2="49" y2="47" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="20" y1="68" x2="15" y2="65" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="32" y1="82" x2="37" y2="79" stroke="#78b05a" stroke-width="1.2" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- CACTUS C — small, far right -->
+<div class="cactus-c">
+  <svg width="38" height="80" viewBox="0 0 38 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="8" width="10" height="62" rx="5" fill="#4a7035"/>
+    <rect x="3"  y="30" width="22" height="8" rx="4" fill="#4a7035"/>
+    <rect x="3"  y="18" width="10" height="22" rx="5" fill="#4a7035"/>
+    <line x1="6"  y1="22" x2="1"  y2="19" stroke="#6aa84f" stroke-width="1" stroke-linecap="round"/>
+    <line x1="6"  y1="30" x2="1"  y2="27" stroke="#6aa84f" stroke-width="1" stroke-linecap="round"/>
+    <line x1="14" y1="50" x2="9"  y2="47" stroke="#6aa84f" stroke-width="1" stroke-linecap="round"/>
+    <line x1="24" y1="60" x2="29" y2="57" stroke="#6aa84f" stroke-width="1" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- CACTUS D — tiny, center-left -->
+<div class="cactus-d">
+  <svg width="26" height="56" viewBox="0 0 26 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="6" width="8" height="44" rx="4" fill="#3d5f2c"/>
+    <rect x="2"  y="22" width="16" height="7" rx="3" fill="#3d5f2c"/>
+    <rect x="2"  y="12" width="8"  height="17" rx="4" fill="#3d5f2c"/>
+    <line x1="4"  y1="15" x2="0"  y2="13" stroke="#5a8a40" stroke-width="1" stroke-linecap="round"/>
+    <line x1="4"  y1="22" x2="0"  y2="20" stroke="#5a8a40" stroke-width="1" stroke-linecap="round"/>
+    <line x1="10" y1="36" x2="6"  y2="34" stroke="#5a8a40" stroke-width="1" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- Main content -->
+<div class="content">
+  <div class="error-code">404</div>
+  <div class="tagline">Page Not Found</div>
+  <div class="divider"></div>
+  <div class="msg-box">
+    <div class="msg-title">This page doesn't exist.</div>
+    <div class="msg-body">You've wandered off the map. Whatever you were looking for<br>is buried somewhere under these sands.</div>
+  </div>
+  <a href="/" class="btn">← Take me home</a>
+</div>
+
+</body>
+</html>

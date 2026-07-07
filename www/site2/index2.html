@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webserv Test Index</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b1020;
+        --bg-2: #121a31;
+        --card: rgba(18, 26, 49, 0.88);
+        --card-border: rgba(148, 163, 184, 0.16);
+        --text: #e5eefc;
+        --muted: #a9b8d3;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(96, 165, 250, 0.22), transparent 34%),
+          radial-gradient(circle at 80% 10%, rgba(104, 211, 145, 0.18), transparent 28%),
+          linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+      }
+
+      .shell { max-width: 1100px; margin: 0 auto; padding: 48px 20px 64px; }
+      .hero { display: grid; gap: 18px; margin-bottom: 28px; }
+      .eyebrow {
+        display: inline-flex; width: fit-content; align-items: center; gap: 10px;
+        padding: 8px 14px; border: 1px solid var(--card-border); border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04); color: var(--muted);
+        font: 600 12px/1.2 Arial, sans-serif; letter-spacing: 0.16em; text-transform: uppercase;
+      }
+      h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: 0.95; letter-spacing: -0.05em; }
+      .lede { max-width: 70ch; margin: 0; color: var(--muted); font: 400 1.06rem/1.75 Arial, sans-serif; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin-top: 28px; }
+      .card {
+        padding: 18px; border: 1px solid var(--card-border); border-radius: 18px;
+        background: var(--card); backdrop-filter: blur(10px); box-shadow: 0 24px 50px rgba(3, 7, 18, 0.32);
+      }
+      .card h2 { margin: 0 0 8px; font-size: 1.15rem; }
+      .card p { margin: 0 0 14px; color: var(--muted); font: 400 0.96rem/1.65 Arial, sans-serif; }
+      .links { display: flex; flex-wrap: wrap; gap: 10px; }
+      a.btn,
+      button.btn {
+        appearance: none; display: inline-flex; align-items: center; justify-content: center;
+        padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(255, 255, 255, 0.06); color: var(--text); font: 700 0.92rem/1 Arial, sans-serif;
+        text-decoration: none; transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      }
+      a.btn:hover,
+      button.btn:hover { transform: translateY(-1px); border-color: rgba(104, 211, 145, 0.38); background: rgba(104, 211, 145, 0.12); }
+      .primary { border-color: rgba(96, 165, 250, 0.35); background: rgba(96, 165, 250, 0.14); }
+      .accent { border-color: rgba(104, 211, 145, 0.4); background: rgba(104, 211, 145, 0.14); }
+      .warning { border-color: rgba(251, 191, 36, 0.45); background: rgba(251, 191, 36, 0.15); }
+      form { display: grid; gap: 10px; }
+      label { font: 700 0.82rem/1.2 Arial, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+      input,
+      textarea {
+        width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(7, 12, 26, 0.7); color: var(--text); font: 400 0.96rem/1.5 Arial, sans-serif;
+      }
+      textarea { min-height: 110px; resize: vertical; }
+      .tiny { font-size: 0.86rem; color: var(--muted); }
+      code {
+        padding: 0.15rem 0.35rem; border-radius: 6px; background: rgba(148, 163, 184, 0.14);
+        color: #d6e7ff; font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="hero">
+        <div class="eyebrow">Webserv route test page</div>
+        <h1>Test the server paths from one page.</h1>
+        <p class="lede">
+          This index is meant to exercise the configured routes, status codes, redirect handling,
+          directory listing, static assets, CGI dispatch, and upload handling.
+          The landing page itself should resolve from <code>/</code> using the configured index file.
+        </p>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Core GET routes</h2>
+          <p>Open the normal pages and verify the body, headers, and the readonly route.</p>
+          <div class="links">
+            <a class="btn primary" href="/">/</a>
+            <a class="btn" href="/list/">/list/</a>
+            <a class="btn" href="/assets/something/">/assets/something/</a>
+            <a class="btn" href="/readonly">/readonly</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Redirect and errors</h2>
+          <p>Use these to check custom error pages and the readonly route.</p>
+          <div class="links">
+            <a class="btn" href="/error_codes/404.html">/error_codes/404.html</a>
+            <a class="btn" href="/does-not-exist">404 test</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Upload test</h2>
+          <p>
+            Submit a small POST body to <code>/upload/</code>. The directory <code>www/upload/</code>
+            exists so the request path can be exercised.
+          </p>
+          <form method="post" action="/upload/">
+            <div>
+              <label for="upload-name">Filename label</label>
+              <input id="upload-name" name="filename" type="text" value="test-upload.txt">
+            </div>
+            <div>
+              <label for="upload-body">Body</label>
+              <textarea id="upload-body" name="content">Sample payload for POST testing.</textarea>
+            </div>
+            <button class="btn accent" type="submit">Send POST /upload/</button>
+          </form>
+          <p class="tiny">If uploads are not fully wired yet, this still confirms request parsing and routing.</p>
+        </article>
+
+        <article class="card">
+          <h2>CGI test</h2>
+          <p>Open the CGI endpoint to verify the location block and script invocation path.</p>
+          <div class="links">
+            <a class="btn primary" href="/cgi-bin/hello.py">/cgi-bin/hello.py</a>
+          </div>
+          <p class="tiny">The script is stored at <code>www/site1/cgi-bin/cgi-bin/hello.py</code> to match the current path join logic.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

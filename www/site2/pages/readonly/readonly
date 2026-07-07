@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readonly Route</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(160deg, #fef3c7 0%, #f8fafc 100%);
+        color: #1f2937;
+        font-family: Arial, sans-serif;
+      }
+
+      main {
+        max-width: 640px;
+        padding: 32px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(180, 83, 9, 0.18);
+        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1;
+      }
+
+      p {
+        margin-bottom: 0;
+        font-size: 1.03rem;
+        line-height: 1.75;
+        color: #4b5563;
+      }
+
+      code {
+        padding: 0.15rem 0.35rem;
+        border-radius: 6px;
+        background: rgba(180, 83, 9, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Readonly route</h1>
+      <p>This file is mapped specifically for <code>/readonly</code> on the second server. It exists to confirm that the location block resolves to the correct file path.</p>
+    </main>
+  </body>
+</html>
