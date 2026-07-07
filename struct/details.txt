@@ -1,0 +1,88 @@
+To build an HTTP webserver, focus on this minimal path: TCP socket server → parse HTTP request → send HTTP response. Here’s what you need and how the pieces you asked about fit in.
+
+1) Core building blocks (what you must implement)
+Socket (TCP)
+Your server listens on an IP:port (e.g., 0.0.0.0:8080).
+Clients (browsers) connect via TCP.
+You accept() a connection and then recv() bytes (the HTTP request) and send() bytes (the HTTP response).
+Typical flow (POSIX):
+
+socket(AF_INET, SOCK_STREAM, 0)
+setsockopt(... SO_REUSEADDR ...)
+bind()
+listen()
+loop:
+accept()
+recv() request
+send() response
+close()
+HTTP basics you must handle at first
+Request line: GET /path HTTP/1.1
+Headers end at blank line: \r\n\r\n
+For GET you usually don’t need a body.
+Respond with:
+status line: HTTP/1.1 200 OK
+headers (at least Content-Length and Content-Type)
+blank line
+body
+Example response:
+
+Code
+HTTP/1.1 200 OK\r\n
+Content-Type: text/plain\r\n
+Content-Length: 5\r\n
+Connection: close\r\n
+\r\n
+Hello
+2) Where fcntl() fits
+fcntl() is commonly used to make sockets non-blocking:
+
+Blocking socket: recv() waits until data arrives.
+Non-blocking: recv() returns immediately (often with “try again”) so one thread can manage many connections with select/poll/epoll.
+Common patterns:
+
+Beginner/easy: blocking sockets + thread per connection (or sequential handling).
+Scalable: non-blocking + event loop (poll/epoll) + careful state machines.
+You do not need fcntl() for a first working server, but you will for a high-performance one.
+
+3) Cookies and sessions in your server
+Cookies
+A cookie is just an HTTP header:
+
+Server sets it:
+Set-Cookie: session_id=abc123; HttpOnly; Secure; SameSite=Lax
+Browser sends it back:
+Cookie: session_id=abc123
+Session management (typical)
+You generate a random session id.
+Store session data server-side: map[session_id] = {user, expiry, ...}
+On each request, read Cookie: header, look up the session.
+For learning: implement a /login route that sets a cookie, and a /profile route that checks it.
+
+4) CGI (and “CGI types”) in relation to your webserver
+CGI is a way to serve dynamic content by running an external program.
+
+Classic CGI (simple, slower)
+Your server:
+
+Parses request
+Sets environment variables like REQUEST_METHOD, QUERY_STRING
+Runs a script/program (e.g., ./hello.cgi)
+Feeds request body to the program’s stdin (for POST)
+Reads program stdout and returns it as HTTP response
+FastCGI / SCGI (faster)
+Instead of spawning a new process per request, the app stays running and communicates over a socket using a defined protocol.
+
+For a learning server, you can skip CGI initially. Once you can serve static files + basic routing, CGI is a nice next step.
+
+5) Suggested learning roadmap (practical)
+Hello World server: always respond 200 OK with “Hello”.
+Parse path: respond differently for /, /health, /time.
+Serve static files: map /index.html to a file, implement 404.
+Keep-alive vs close: start by always Connection: close.
+Add minimal POST support: read Content-Length, parse body.
+Cookies + sessions: implement /login sets cookie, /me checks it.
+Concurrency:
+easiest: thread-per-connection
+then: poll/epoll + non-blocking (fcntl)
+Security: avoid directory traversal (..), set limits (max header size), timeouts.

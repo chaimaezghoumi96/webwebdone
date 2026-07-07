@@ -1,0 +1,32 @@
+TCP (Transmission Control Protocol): A reliable “delivery” protocol used on the Internet. It makes sure data arrives correctly and in order by using acknowledgments and retransmissions. Commonly used for web browsing (HTTPS), email, file transfers, etc.
+
+IP (Internet Protocol): The addressing and routing system of the Internet. IP moves packets from one device/network to another using IP addresses (like 192.168.1.10 for IPv4 or 2001:db8::1 for IPv6). IP by itself is not “reliable”; it just delivers best-effort.
+
+HTTP (Hypertext Transfer Protocol): The application protocol web browsers use to request and receive web pages and APIs. It’s typically layered on top of TCP.
+
+HTTPS = HTTP + encryption (TLS) to protect data in transit.
+Ports: Numbered “doors” on a computer that let it run multiple network services on one IP address. A connection is identified by (IP address + port).
+Examples:
+
+HTTP usually uses port 80
+HTTPS usually uses port 443
+DNS usually uses port 53
+DHCP usually uses ports 67/68 (traditional IPv4)
+DNS (Domain Name System): The Internet’s “phonebook.” It translates human-friendly names (like example.com) into IP addresses (like 93.184.216.34) and also stores other records (MX for mail, TXT, etc.).
+
+DHCP (Dynamic Host Configuration Protocol): Automatically gives devices network settings when they join a network—typically:
+
+IP address
+subnet mask
+default gateway (router)
+DNS server(s)
+This avoids manually configuring each device.
+TLD (Top-Level Domain): The last part of a domain name, such as:
+
+.com, .org, .net (generic TLDs)
+.uk, .jp, .de (country-code TLDs)
+In www.example.com, the TLD is .com.
+
+
+
+
