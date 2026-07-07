@@ -1,0 +1,42 @@
+Config (root)
+└── servers : vector<ServerConfig>
+    ├── ServerConfig[0]
+    │   ├── listens : vector<Listen>
+    │   │   ├── Listen[0]  (host, port)
+    │   │   ├── Listen[1]  (host, port)
+    │   │   └── ...
+    │   ├── server_name : string
+    │   ├── root : path
+    │   ├── client_max_body_size : size_t
+    │   ├── error_pages : map<int, string>
+    │   │   ├── 404 -> "./errors/404.html"
+    │   │   ├── 500 -> "./errors/500.html"
+    │   │   └── ...
+    │   └── locations : vector<LocationConfig>
+    │       ├── LocationConfig[0]  (e.g. prefix "/")
+    │       │   ├── prefix : string
+    │       │   ├── methods : set<string>
+    │       │   │   ├── "GET"
+    │       │   │   └── ...
+    │       │   ├── redirect : Redirect
+    │       │   │   ├── enabled : bool
+    │       │   │   ├── code : int 
+    │       │   │   └── target : string
+    │       │   ├── root : string
+    │       │   ├── autoindex : bool
+    │       │   ├── index : vector<string>
+    │       │   │   ├── "index.html"
+    │       │   │   └── ...
+    │       │   ├── upload : UploadConfig
+    │       │   │   ├── enabled : bool
+    │       │   │   └── dir : string
+    │       │   └── cgi : map<string, string>   (CgiMap)
+    │       │       ├── ".py"  -> "/usr/bin/python3"
+    │       │       ├── ".php" -> "/usr/bin/php-cgi"
+    │       │       └── ...
+    │       ├── LocationConfig[1] (e.g. prefix "/upload/")
+    │       │   └── (same fields as above)
+    │       └── ...
+    ├── ServerConfig[1]
+    │   └── (same structure as ServerConfig[0])
+    └── ...

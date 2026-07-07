@@ -1,0 +1,13 @@
+looking for the path in evry location that u heve
+lookin for the longest mach u can found in the paths
+if the maching was only one char then its valid if i found mor maching then i ll shoos the longest mach
+then ill take the path and add it to the root i found
+if no root founded in my locations then ill add the the path to the server root 
+then i can chekc if file existed i can open it or not.
+
+If redirect.eneble = true return code from his fucking code 30X
+If open() succeeds, the file exists and you have the required permissions. You can then proceed to read it.
+If open() fails, check errno.
+If errno is EACCES or EPERM, you know you have a 403 Forbidden error .
+If errno is ENOENT, you know you have a 404 Not Found error.
+if the method is not valid for the path 405
